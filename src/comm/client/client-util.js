@@ -41,6 +41,18 @@ function pushResult(pid, data) {
 }
 
 /**
+ * Push test result from a child process into the global array
+ * @param {String} pid pid of the child process
+ * @param {Object} data test result
+ */
+function pushHistory(pid, data) {
+    let p = processes[pid];
+    if(p && p.history && typeof p.history !== 'undefined') {
+        p.history.push(data);
+    }
+}
+
+/**
  * Push update value from a child process into the global array
  * @param {String} pid pid of the child process
  * @param {Object} data update value
@@ -57,16 +69,17 @@ function pushUpdate(pid, data) {
  * @param {Array} updates array to save txUpdate results
  * @param {Array} results array to save the test results
  */
-function launchClient(updates, results) {
+function launchClient(updates, results, history) {
     let path = require('path');
     let childProcess = require('child_process');
     let child = childProcess.fork(path.join(__dirname, 'local-client.js'));
     let pid   = child.pid.toString();
-    processes[pid] = {obj: child, results: results, updates: updates};
+    processes[pid] = {obj: child, results: results, history: history, updates: updates};
 
     child.on('message', function(msg) {
         if(msg.type === 'testResult') {
-            pushResult(pid, msg.data);
+            pushResult(pid, msg.data.stats);
+            pushHistory(pid, msg.data.history);
             setPromise(pid, true, null);
         }
         else if(msg.type === 'error') {
@@ -96,7 +109,7 @@ function launchClient(updates, results) {
  * @param {Array} results array to save the test results
  * @return {Promise} promise object
  */
-function startTest(number, message, clientArgs, updates, results) {
+function startTest(number, message, clientArgs, updates, results, history) {
     let count = 0;
     for(let i in processes) {
         i;  // avoid eslint error
@@ -138,6 +151,7 @@ function startTest(number, message, clientArgs, updates, results) {
             });
             promises.push(p);
             client.results = results;
+            client.history = history;
             client.updates = updates;
             message.clientargs = clientArgs[idx];
             message.clientIdx = idx;
@@ -161,11 +175,11 @@ function startTest(number, message, clientArgs, updates, results) {
     // launch clients
     processes = {};
     for(let i = 0 ; i < number ; i++) {
-        launchClient(updates, results);
+        launchClient(updates, results, history);
     }
 
     // start test
-    return startTest(number, message, clientArgs, updates, results);
+    return startTest(number, message, clientArgs, updates, results, history);
 }
 module.exports.startTest = startTest;
 

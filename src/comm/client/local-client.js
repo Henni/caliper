@@ -179,9 +179,8 @@ function doTest(msg) {
             let safeCut = (2 * trim) < results.length ? trim : results.length;
             results = results.slice(safeCut, results.length - safeCut);
         }
-
         let stats = blockchain.getDefaultTxStats(results, true);
-        return Promise.resolve(stats);
+        return Promise.resolve(stats, results);
     }).catch((err) => {
         clearUpdateInter();
         log('Client ' + process.pid + ': error ' + (err.stack ? err.stack : err));
@@ -198,11 +197,13 @@ process.on('message', function(message) {
             switch(message.type) {
             case 'test': {
                 let result;
-                doTest(message).then((output) => {
+                let history;
+                doTest(message).then((output, output2) => {
                     result = output;
+                    history = output2;
                     return Util.sleep(200);
                 }).then(() => {
-                    process.send({type: 'testResult', data: result});
+                    process.send({type: 'testResult', data: {result: result, history: history});
                 });
                 break;
             }

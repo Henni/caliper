@@ -220,7 +220,7 @@ class Client{
      */
     _startLocalTest(message, clientArgs) {
         message.totalClients = this.number;
-        return clientUtil.startTest(this.number, message, clientArgs, this.updates.data, this.results);
+        return clientUtil.startTest(this.number, message, clientArgs, this.updates.data, this.results, this.history);
     }
 
     /**
