@@ -203,7 +203,7 @@ process.on('message', function(message) {
                     history = output2;
                     return Util.sleep(200);
                 }).then(() => {
-                    process.send({type: 'testResult', data: {result: result, history: history});
+                    process.send({type: 'testResult', data: {result: result, history: history}});
                 });
                 break;
             }
