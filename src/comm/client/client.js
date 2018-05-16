@@ -139,6 +139,7 @@ class Client{
     startTest(message, clientArgs, finishCB, finishArgs) {
         let p;
         this.results = [];
+        this.history = [];
         this.updates.data = [];
         this.updates.id++;
         switch(this.type) {

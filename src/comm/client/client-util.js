@@ -80,6 +80,7 @@ function launchClient(updates, results, history) {
         if(msg.type === 'testResult') {
             pushResult(pid, msg.data.stats);
             pushHistory(pid, msg.data.history);
+            console.log(msg.data.history);
             setPromise(pid, true, null);
         }
         else if(msg.type === 'error') {
