@@ -152,7 +152,7 @@ function printResultsByRound() {
  * @param {String} label label of the test round
  * @return {Promise} promise object
  */
-function processResult(results, label){
+function processResult(results, history, label){
     try{
         let resultTable = [];
         resultTable[0] = getResultTitle();

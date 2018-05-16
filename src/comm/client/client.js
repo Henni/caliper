@@ -152,7 +152,7 @@ class Client{
             return Promise.reject(new Error('Unknown client type: ' + this.type));
         }
         return p.then(()=>{
-            return finishCB(this.results, finishArgs);
+            return finishCB(this.results, this.history, finishArgs);
         }).then(()=>{
             return Promise.resolve();
         }).catch((err)=>{
