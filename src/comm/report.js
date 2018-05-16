@@ -130,7 +130,8 @@ class Report {
             'id' : 'round ' + id,
             'description' : description,
             'performance' : {'head':[], 'result': []},
-            'resource' : {'head':[], 'results': []}
+            'resource' : {'head':[], 'results': []},
+            'history': []
         });
 
         return id;
@@ -154,6 +155,19 @@ class Report {
         {
             this.data.rounds[id].performance.result = table[1];
         }
+    }
+
+    /**
+    * set performance table of a specific round
+    * @param {Number} id id of the round
+    * @param {Array} table table array containing the performance values
+    */
+    setRoundHistory(id, history) {
+        if(id < 0 || id >= this.data.rounds.length) {
+            throw new Error('unrecognized report id');
+        }
+
+        this.data.rounds[id].history = history;
     }
 
     /**
@@ -218,6 +232,8 @@ class Report {
                     resolve('Report  created successfully!');
                 }
             });
+
+            fs.writeFile(output + '.json', JSON.stringify(this.data), (error) => {});
         });
     }
 }

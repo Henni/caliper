@@ -153,9 +153,6 @@ function printResultsByRound() {
  * @return {Promise} promise object
  */
 function processResult(results, history, label){
-    let fs = require('fs');
-    let date = new Date().toISOString().replace(/-/g,'').replace(/:/g,'').substr(0,15);
-    let output = path.join(process.cwd(), 'history'+date+'.json' );
     fs.writeFile(output, JSON.stringify(history));
     try{
         let resultTable = [];
@@ -181,6 +178,7 @@ function processResult(results, history, label){
         printTable(resultTable);
         let idx = report.addBenchmarkRound(label);
         report.setRoundPerformance(idx, resultTable);
+        report.setRoundHistory(idx, history.reduce( (acc, x) => acc.concat(x) ));
         let resourceTable = monitor.getDefaultStats();
         if(resourceTable && resourceTable.length > 0) {
             log('### resource stats ###');
