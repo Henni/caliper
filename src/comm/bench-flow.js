@@ -153,7 +153,6 @@ function printResultsByRound() {
  * @return {Promise} promise object
  */
 function processResult(results, history, label){
-    fs.writeFile(output, JSON.stringify(history));
     try{
         let resultTable = [];
         resultTable[0] = getResultTitle();

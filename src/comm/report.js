@@ -225,6 +225,7 @@ class Report {
             let Mustache = require('mustache');
             let templateStr = fs.readFileSync(this.template).toString();
             let html = Mustache.render(templateStr, this.data);
+            fs.writeFile(output + '.json', JSON.stringify(this.data), (error) => {});
             fs.writeFile(output, html, (error) => {
                 if (error) {
                     reject(error);
@@ -232,8 +233,6 @@ class Report {
                     resolve('Report  created successfully!');
                 }
             });
-
-            fs.writeFile(output + '.json', JSON.stringify(this.data), (error) => {});
         });
     }
 }
