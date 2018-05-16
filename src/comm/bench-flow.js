@@ -153,6 +153,10 @@ function printResultsByRound() {
  * @return {Promise} promise object
  */
 function processResult(results, history, label){
+    let fs = require('fs');
+    let date = new Date().toISOString().replace(/-/g,'').replace(/:/g,'').substr(0,15);
+    let output = path.join(process.cwd(), 'history'+date+'.json' );
+    fs.writeFile(output, JSON.stringify(history));
     try{
         let resultTable = [];
         resultTable[0] = getResultTitle();
