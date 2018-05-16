@@ -178,7 +178,7 @@ function processResult(results, label){
         let idx = report.addBenchmarkRound(label);
         report.setRoundPerformance(idx, resultTable);
         let resourceTable = monitor.getDefaultStats();
-        if(resourceTable.length > 0) {
+        if(resourceTable && resourceTable.length > 0) {
             log('### resource stats ###');
             printTable(resourceTable);
             report.setRoundResource(idx, resourceTable);
