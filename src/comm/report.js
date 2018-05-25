@@ -222,11 +222,12 @@ class Report {
     generate(output) {
         return new Promise((resolve, reject) => {
             let fs = require('fs');
+            let path = require('path');
             let Mustache = require('mustache');
             let templateStr = fs.readFileSync(this.template).toString();
             let html = Mustache.render(templateStr, this.data);
-            fs.writeFile(output + 'report.json', JSON.stringify(this.data), (error) => {});
-            fs.writeFile(output + 'report.html', html, (error) => {
+            fs.writeFile(path.join(output, 'report.json'), JSON.stringify(this.data), (error) => {});
+            fs.writeFile(path.join(output, 'report.html'), html, (error) => {
                 if (error) {
                     reject(error);
                 } else {

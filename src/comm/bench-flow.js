@@ -327,7 +327,7 @@ module.exports.run = function(configFile, networkFile) {
             printResultsByRound();
             monitor.printMaxStats();
             monitor.stop();
-            let output = path.join(process.cwd());
+            let output = process.cwd();
             return report.generate(output).then(()=>{
                 demo.stopWatch(output);
                 log('Generated report at ' + output);
