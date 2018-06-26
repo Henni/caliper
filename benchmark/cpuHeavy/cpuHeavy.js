@@ -18,7 +18,7 @@ module.exports.init = function(blockchain, context, args) {
 };
 
 module.exports.run = function() {
-    return bc.invokeSmartContract(contx, 'cpuHeavy', 'v0', {verb: 'cpuHeavy'}, 30);
+    return bc.invokeSmartContract(contx, 'cpuHeavy', 'v0', {verb: 'cpuHeavy'}, 30000);
 };
 
 module.exports.end = function(results) {
