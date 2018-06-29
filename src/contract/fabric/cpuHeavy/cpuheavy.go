@@ -22,7 +22,7 @@ func (t *CpuHeavyChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 }
 
 func (t *CpuHeavyChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < 14000000; i++ {
 	}
 	return shim.Success(nil)
 }
