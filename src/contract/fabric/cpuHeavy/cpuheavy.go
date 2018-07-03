@@ -9,6 +9,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
 )
@@ -22,7 +23,9 @@ func (t *CpuHeavyChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 }
 
 func (t *CpuHeavyChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
-	for i := 0; i < 14000000; i++ {
+	_, args := stub.GetFunctionAndParameters()
+	iterations := strconv.Atoi(args[0])
+	for i := 0; i < iterations; i++ {
 	}
 	return shim.Success(nil)
 }
