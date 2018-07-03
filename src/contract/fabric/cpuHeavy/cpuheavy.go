@@ -24,7 +24,7 @@ func (t *CpuHeavyChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 
 func (t *CpuHeavyChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	_, args := stub.GetFunctionAndParameters()
-	iterations := strconv.Atoi(args[0])
+	iterations, _ := strconv.Atoi(args[0])
 	for i := 0; i < iterations; i++ {
 	}
 	return shim.Success(nil)
