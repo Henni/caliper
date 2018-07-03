@@ -10,15 +10,16 @@
 module.exports.info  = 'doing nothing';
 
 
-let bc, contx;
+let bc, contx, iterations;
 module.exports.init = function(blockchain, context, args) {
-    bc       = blockchain;
-    contx    = context;
+    bc         = blockchain;
+    contx      = context;
+    iterations = args.iterations;
     return Promise.resolve();
 };
 
 module.exports.run = function() {
-    return bc.invokeSmartContract(contx, 'cpuHeavy', 'v0', {verb: 'cpuHeavy'}, 30000);
+    return bc.invokeSmartContract(contx, 'cpuHeavy', 'v0', {verb: 'cpuHeavy', iterations: iterations}, 30000);
 };
 
 module.exports.end = function(results) {
