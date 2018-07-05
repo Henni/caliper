@@ -14,7 +14,7 @@ let bc, contx, iterations;
 module.exports.init = function(blockchain, context, args) {
     bc         = blockchain;
     contx      = context;
-    iterations = args.iterations;
+    iterations = args.iterations.toString();
     return Promise.resolve();
 };
 
